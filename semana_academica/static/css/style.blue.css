@@ -1892,3 +1892,14 @@ a.list-group-item.active > .badge,
 .nav-pills > li > a > .badge {
   margin-left: 3px;
 }
+
+.main-jumbotron {
+  position: relative;
+  padding-top: 80px;
+  padding-bottom: 80px;
+  color: #fff;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+  text-align: center;
+  background: url('../img/banner.png') center center no-repeat;
+  background-size: cover;
+}

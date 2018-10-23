@@ -22,23 +22,10 @@
         <div class="row">
           <div class="col-md-12">
             <div class="h2" align="center">
-              Participe da MOEPEX
+              Participe da 3ª Semana Acadêmica
             </div>
           </div>
-          <div class="col-md-2 col-md-offset-2">
-            <div class="post" align="center">
-                <a href="#" class="btn btn-ghost">Minicursos</a>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="post" align="center">
-            </div>
-          </div>
-          <div class="col-md-2">
-            <div class="post" align="center">
-              <a href="#" class="btn btn-ghost">Palestras</a>
-            </div>
-          </div>
+          
         </div>
       </div>
     </section>
@@ -47,12 +34,13 @@
       <div class="container clearfix">
         <div class="row services">
           <div class="col-md-12">
-            <span class="h2">Minicursos</span>
-            <p>Clique no título para mais informações e inscrever-se.</p>
+            <span class="h2">Minicursos e Palestras</span>
+            <p>Clique no título para mais informações</p>
             <table class="table">
               <thead>
                 <tr>
                   <th>Título</th>
+                  <th>Ministrante</th>
                   <th>Descrição</th>
                 </tr>
               </thead>
@@ -60,7 +48,23 @@
               {% for event in events %}
                 <tr>
                   <td> <a href="{% url 'event-detail' event.pk %}">{{ event.title }}</a></td>
+                  <td>{{ event.author.get_full_name }}</td>
                   <td>{{ event.description|truncatechars:100 }}</td>
+                  <td>{% if registration %}
+                    {% if registration.group == group %}
+                      <a class="btn btn-success" href="{% url 'event-delete-registration' group.id %}" >Inscrito (Clique aqui para CANCELAR)</a>
+                    {% else %}
+                      <button class="btn btn-success" disabled>Inscrito em outra turma</button>
+                    {% endif %}
+                  {% elif not request.user.is_authenticated %}
+                    <button class="btn btn-danger" disabled>Necessário Login Para Inscrição</button>
+                  {% elif group.registrations.count >= group.event.vacancies %}
+                      <button class="btn btn-danger" disabled>Esgotado</button>
+                  {% elif group|check:request.user %}
+                    <button class="btn btn-danger" disabled>Conflito de horário</button>
+                  {% else %}
+                    <a href="{% url 'event-registration' group.pk %}" class="btn btn-success btn-info">Realizar Inscrição</a>
+{% endif %}</td>
                 </tr>
               {% endfor %}
               </tbody>
@@ -72,29 +76,7 @@
     <!--   *** Minicursos END ***-->
     <!-- Experimentos-->
     <section id="portfolio" class="background-gray-lightest">
-    <div class="container clearfix">
-        <div class="row services">
-          <div class="col-md-12">
-            <span class="h2">Palestras</span>
-            <table class="table">
-              <thead>
-                <tr>
-                  <th>Título</th>
-                  <th>Descrição</th>
-                </tr>
-              </thead>
-              <tbody>
-              <!--{% for experiment in experiments %}
-                <tr>
-                  <td> <a href="#">{{ experiment.title }}</a></td>
-                  <td>{{ experiment.description|truncatechars:100 }}</td>
-                </tr>
-              {% endfor %}-->
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
+    
     </section>
     <!-- Experimentos END-->
 

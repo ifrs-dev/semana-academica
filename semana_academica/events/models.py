@@ -2,6 +2,13 @@ from django.db import models
 from django.contrib.auth.models import User
 # Create your models here.
 
+CHOICES_STATUS_REGISTRATION = (
+    (1, "Inscrito"),
+    (2, "Presente"),
+    (3, "Ausente"),
+)
+
+
 class Event(models.Model):
 
     class Meta:
@@ -16,7 +23,16 @@ class Event(models.Model):
     requirements = models.TextField(verbose_name='Pré-requisitos', blank=True, null=True)
     materials = models.TextField(verbose_name='Recursos necessários', blank=True, null=True)
     workload = models.PositiveIntegerField(verbose_name='Carga Horária')
-    status = models.IntegerField(default=1, verbose_name='Status')
     author = models.ForeignKey(User, verbose_name='Autor', on_delete=models.PROTECT, related_name='author_events')
-    co_authors = models.ManyToManyField(User, verbose_name='Co-autores', related_name='co_authors_events', blank=True)
-    supervisor = models.ForeignKey(User, verbose_name='Orientador', on_delete=models.PROTECT, related_name='supervised_events', blank=True, null=True)
+
+
+class Registration(models.Model):
+
+    class Meta:
+        unique_together = (('event', 'user'),)
+        verbose_name = 'Inscrição'
+        verbose_name_plural = 'Inscrições'
+
+    event = models.ForeignKey(Event, on_delete=models.PROTECT, related_name='registrations')
+    user = models.ForeignKey(User, on_delete=models.PROTECT, related_name='registrations')
+    status = models.IntegerField(choices=CHOICES_STATUS_REGISTRATION, default=1)
