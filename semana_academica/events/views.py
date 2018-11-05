@@ -1,7 +1,15 @@
 from django.shortcuts import render
 
 from django.views.generic import ListView, TemplateView, DetailView
+from django.views.generic.edit import CreateView
 from events.models import Event, Registration
+from django.urls import reverse_lazy
+from django.contrib.auth.models import User
+from django.contrib import messages
+from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth.forms import PasswordChangeForm
+from django.shortcuts import render, redirect
+from events.forms import SignUpForm
 # Create your views here.
 
 class HomeView(ListView):
@@ -19,7 +27,7 @@ class ProgramTemplateView(TemplateView):
 
 class EventDetailView(DetailView):
     model = Event
-    template_name = 'events/event-detail.html'
+    template_name = 'event-detail.html'
 
     def get_context_data(self, *args, **kwargs):
         event = self.get_object()
@@ -45,3 +53,32 @@ class RegistrationPresentView(RegistrationUpdateView):
 
 class RegistrationAbsentView(RegistrationUpdateView):
     status = 3
+
+class SignUpView (CreateView):
+    template_name = 'registration/signup.html'
+    form_class = SignUpForm
+    success_url = reverse_lazy('login')
+
+def change_password(request):
+    if request.method == 'POST':
+        form = PasswordChangeForm(request.user, request.POST)
+        if form.is_valid():
+            user = form.save()
+            update_session_auth_hash(request, user)  # Important!
+            messages.success(request, 'Your password was successfully updated!')
+            return redirect('home')
+        else:
+            messages.error(request, 'Please correct the error below.')
+    else:
+        form = PasswordChangeForm(request.user)
+    return render(request, 'registration/change_password.html', {
+        'form': form
+    })
+
+
+class EventRegistrationView(DetailView):
+    model = Event
+
+    def get(self, request, *args, **kwargs):
+        Registration.objects.create(event=self.get_object(), user=request.user)
+        return redirect('home')

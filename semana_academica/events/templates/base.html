@@ -31,7 +31,7 @@
     <header class="header">
       <div role="navigation" class="navbar navbar-default">
         <div class="container">
-          <div class="navbar-header"><a href="http://moepex.ibiruba.ifrs.edu.br/" class="navbar-brand"><h1 class="h3">Semana Acadêmica</h1></a>
+          <div class="navbar-header"><a href="http://127.0.0.1:8000/" class="navbar-brand"><h1 class="h3">3ª Semana Acadêmica</h1></a>
             <div class="navbar-buttons">
               <button type="button" data-toggle="collapse" data-target=".navbar-collapse" class="navbar-toggle navbar-btn">Menu<i class="fa fa-align-justify"></i></button>
             </div>
@@ -39,28 +39,22 @@
           <div id="navigation" class="collapse navbar-collapse navbar-right">
             <ul class="nav navbar-nav">
               <li><a href="{% url 'program'%}">Programação</a></li>
-              <li><a href="{% url 'rules'%}" target="_blank">Regulamento</a></li>
+              <li><a href="{% url 'rules'%}">Regulamento</a></li>
             </ul>
             <!--{% if request.user.is_authenticated %}-->
-              <a href="#" class="btn navbar-btn btn-ghost" data-toggle="tooltip" data-placement="bottom" title="Alterar senha">
+              <a href="{% url 'change_password'%}" class="btn navbar-btn btn-ghost" data-toggle="tooltip" data-placement="bottom" title="Alterar senha">
                 <i class="fa fa-key"></i>
               </a>
               <!--{% if request.user.is_staff %}-->
                 <a href="{% url 'admin:index' %}" class="btn navbar-btn btn-ghost" data-toggle="tooltip" data-placement="bottom" title="Admin">
                   <i class="fa fa-lock"></i>
                 </a>
-                <a href="#" class="btn navbar-btn btn-ghost" data-toggle="tooltip" data-placement="bottom" title="Arquivo CSV para certificado">
-                  <i class="fa fa-download"></i>
-                </a>
               <!--{% endif %}-->
-              <a href="#" class="btn navbar-btn btn-ghost" data-toggle="tooltip" data-placement="bottom" title="Meus Eventos">
-                <i class="fa fa-calendar"></i>
-              </a>
-              <a href="#" class="btn navbar-btn btn-ghost" data-toggle="tooltip" data-placement="bottom" title="Sair">
+              <a href="{% url 'logout' %}" class="btn navbar-btn btn-ghost" data-toggle="tooltip" data-placement="bottom" title="Sair">
                 <i class="fa fa-sign-out"></i>
               </a>
             <!--{% else %}-->
-              <a href="#" class="btn navbar-btn btn-ghost"><i class="fa fa-user"></i>Entrar</a>
+              <a href="{% url 'login' %}" class="btn navbar-btn btn-ghost"><i class="fa fa-user"></i>Entrar</a>
             <!--{% endif %}-->
           </div>
         </div>

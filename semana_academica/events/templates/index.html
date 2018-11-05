@@ -11,7 +11,7 @@
           <p><strong>Participe conosco!</strong></p>
             <b>Links Importantes: <b>
               <a href="{% url 'program'%}" target="_blank">Programação</a>,
-              <a href="#" target="_blank">Regulamento</a> e
+              <a href="{% url 'rules'%}" target="_blank">Regulamento</a> e
               <a href="#" target="_blank">Sistema de Inscrições</a>.
           </p>
         </article>
@@ -24,12 +24,13 @@
             <div class="h2" align="center">
               Participe da 3ª Semana Acadêmica
             </div>
+            <div align="center"><a href="#" class="btn btn-success btn-info">Realizar Inscrição</a></div>
           </div>
-          
         </div>
       </div>
-    </section>
-    <!--   *** Minicursos ***-->
+    </section><center>
+
+    <!--   *** Minicursos ***--></center>
     <section>
       <div class="container clearfix">
         <div class="row services">
@@ -41,7 +42,7 @@
                 <tr>
                   <th>Título</th>
                   <th>Ministrante</th>
-                  <th>Descrição</th>
+                  <!--<th>Descrição</th>-->
                 </tr>
               </thead>
               <tbody>
@@ -49,22 +50,7 @@
                 <tr>
                   <td> <a href="{% url 'event-detail' event.pk %}">{{ event.title }}</a></td>
                   <td>{{ event.author.get_full_name }}</td>
-                  <td>{{ event.description|truncatechars:100 }}</td>
-                  <td>{% if registration %}
-                    {% if registration.group == group %}
-                      <a class="btn btn-success" href="{% url 'event-delete-registration' group.id %}" >Inscrito (Clique aqui para CANCELAR)</a>
-                    {% else %}
-                      <button class="btn btn-success" disabled>Inscrito em outra turma</button>
-                    {% endif %}
-                  {% elif not request.user.is_authenticated %}
-                    <button class="btn btn-danger" disabled>Necessário Login Para Inscrição</button>
-                  {% elif group.registrations.count >= group.event.vacancies %}
-                      <button class="btn btn-danger" disabled>Esgotado</button>
-                  {% elif group|check:request.user %}
-                    <button class="btn btn-danger" disabled>Conflito de horário</button>
-                  {% else %}
-                    <a href="{% url 'event-registration' group.pk %}" class="btn btn-success btn-info">Realizar Inscrição</a>
-{% endif %}</td>
+                  <!--<td>{{ event.description|truncatechars:100 }}</td>-->
                 </tr>
               {% endfor %}
               </tbody>
