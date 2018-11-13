@@ -2,7 +2,7 @@ from django.shortcuts import render
 
 from django.views.generic import ListView, TemplateView, DetailView
 from django.views.generic.edit import CreateView
-from events.models import Event, Registration
+from events.models import Registration
 from django.urls import reverse_lazy
 from django.contrib.auth.models import User
 from django.contrib import messages
@@ -12,29 +12,18 @@ from django.shortcuts import render, redirect
 from events.forms import SignUpForm
 # Create your views here.
 
-class HomeView(ListView):
-    model = Event
+class HomeView(TemplateView):
     template_name = 'index.html'
-
-    def get_context_data(self, *args, **kwargs):
-        context = super().get_context_data()
-        #context['experiments'] = Experiment.objects.all()
-        context['events'] = Event.objects.all()
-        return context
 
 class ProgramTemplateView(TemplateView):
     template_name = 'program.html'
 
-class EventDetailView(DetailView):
-    model = Event
-    template_name = 'event-detail.html'
-
-    def get_context_data(self, *args, **kwargs):
-        event = self.get_object()
-        user = self.request.user
-
 class RulesTemplateView(TemplateView):
     template_name = 'rules.html'
+
+def registrationViewy(request):
+    Registration.objects.create(user=request.user)
+    return redirect('home')
 
 class RegistrationUpdateView(DetailView):
     model = Registration
@@ -44,15 +33,21 @@ class RegistrationUpdateView(DetailView):
         registration = self.get_object()
         registration.status = self.status
         registration.save()
-        return redirect('registrations-list', registration.group.id)
+        return redirect('home')
 
-
+'''
+class RegistrationListView(ListView):
+    model = Registration
+    template_name = 
+'''
 class RegistrationPresentView(RegistrationUpdateView):
+    status = 3
+
+class RegistrationPaidView(RegistrationUpdateView):
     status = 2
 
-
 class RegistrationAbsentView(RegistrationUpdateView):
-    status = 3
+    status = 0
 
 class SignUpView (CreateView):
     template_name = 'registration/signup.html'
@@ -74,11 +69,3 @@ def change_password(request):
     return render(request, 'registration/change_password.html', {
         'form': form
     })
-
-
-class EventRegistrationView(DetailView):
-    model = Event
-
-    def get(self, request, *args, **kwargs):
-        Registration.objects.create(event=self.get_object(), user=request.user)
-        return redirect('home')
