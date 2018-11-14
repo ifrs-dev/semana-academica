@@ -10,7 +10,10 @@ urlpatterns = [
     path('programacao', views_events.ProgramTemplateView.as_view(), name='program'),
     path('regulamento', views_events.RulesTemplateView.as_view(), name='rules'),
     path('login/', auth_views.LoginView.as_view(), name="login"),
-    path('change_password', views_events.change_password, name='change_password'),
+    path('change_password', login_required(views_events.change_password), name='change_password'),
     path('cadastro/', views_events.SignUpView.as_view(), name='signup'),
     path('logout/', auth_views.LogoutView.as_view(), name="logout"),
+    path('inscricao/', login_required(views_events.RegistrationView.as_view()), name="registration"),
+    path('ausente/', login_required(views_events.RegistrationPresentView.as_view()), name="registration-present"),
+    path('presente/', login_required(views_events.RegistrationAbsentView.as_view()), name="registration-absent"),
 ]

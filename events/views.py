@@ -2,6 +2,7 @@ from django.shortcuts import render
 
 from django.views.generic import ListView, TemplateView, DetailView
 from django.views.generic.edit import CreateView
+from django.views import View
 from events.models import Registration
 from django.urls import reverse_lazy
 from django.contrib.auth.models import User
@@ -10,7 +11,6 @@ from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
 from django.shortcuts import render, redirect
 from events.forms import SignUpForm
-# Create your views here.
 
 class HomeView(TemplateView):
     template_name = 'index.html'
@@ -21,9 +21,11 @@ class ProgramTemplateView(TemplateView):
 class RulesTemplateView(TemplateView):
     template_name = 'rules.html'
 
-def registrationViewy(request):
-    Registration.objects.create(user=request.user)
-    return redirect('home')
+class RegistrationView(View):
+
+    def get(self, request, *args, **kwargs):
+        Registration.objects.create(user=request.user)
+        return redirect('home')
 
 class RegistrationUpdateView(DetailView):
     model = Registration
@@ -35,19 +37,11 @@ class RegistrationUpdateView(DetailView):
         registration.save()
         return redirect('home')
 
-'''
-class RegistrationListView(ListView):
-    model = Registration
-    template_name = 
-'''
 class RegistrationPresentView(RegistrationUpdateView):
-    status = 3
-
-class RegistrationPaidView(RegistrationUpdateView):
     status = 2
 
 class RegistrationAbsentView(RegistrationUpdateView):
-    status = 0
+    status = 3
 
 class SignUpView (CreateView):
     template_name = 'registration/signup.html'
