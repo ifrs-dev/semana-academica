@@ -10,9 +10,6 @@ CHOICES_STATUS_REGISTRATION = (
 )
 
 
-
-
-
 class Registration(models.Model):
 
     class Meta:
@@ -20,5 +17,5 @@ class Registration(models.Model):
         verbose_name = 'Inscrição'
         verbose_name_plural = 'Inscrições'
 
-    user = models.ForeignKey(User, unique=True, on_delete=models.PROTECT, related_name='registrations')
+    user = models.OneToOneField.(User, on_delete=models.PROTECT, related_name='registrations')
     status = models.IntegerField(choices=CHOICES_STATUS_REGISTRATION, default=1)
