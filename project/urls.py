@@ -13,7 +13,9 @@ urlpatterns = [
     path('change_password', login_required(views_events.change_password), name='change_password'),
     path('cadastro/', views_events.SignUpView.as_view(), name='signup'),
     path('logout/', auth_views.LogoutView.as_view(), name="logout"),
+    path('participantes/', login_required(views_events.RegistrationsListView.as_view()), name="registrations-list"),
     path('inscricao/', login_required(views_events.RegistrationView.as_view()), name="registration"),
     path('ausente/', login_required(views_events.RegistrationPresentView.as_view()), name="registration-present"),
     path('presente/', login_required(views_events.RegistrationAbsentView.as_view()), name="registration-absent"),
+    path('cancelar-inscricao/', login_required(views_events.EventRegistrationDeleteView.as_view()), name="event-delete-registration"),
 ]

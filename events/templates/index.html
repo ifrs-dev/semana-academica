@@ -23,11 +23,17 @@
           <div class="col-md-12">
             <div class="h2" align="center">
               Participe da 3ª Semana Acadêmica
-            </div>
-
-
-
-            <div align="center"><a href="{% url 'registration' %}" class="btn btn-success btn-info">Realizar Inscrição</a></div>
+            </div><center>
+            {% if registration %}
+                    {% if registration.user == user %}
+                      <a class="btn btn-success" href="{% url 'event-delete-registration' group.id %}" >Inscrito (Clique aqui para CANCELAR)</a>
+                    {% endif %}
+                  {% elif not request.user.is_authenticated %}
+                    <button class="btn btn-danger" disabled>Necessário Login Para Inscrição</button>
+                  {% else %}
+                    <div align="center"><a href="{% url 'registration' %}" class="btn btn-success btn-info">Realizar Inscrição</a></div>
+{% endif %}
+</center>
 
           </div>
         </div>

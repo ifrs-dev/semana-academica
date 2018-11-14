@@ -27,6 +27,12 @@ class RegistrationView(View):
         Registration.objects.create(user=request.user)
         return redirect('home')
 
+class EventRegistrationDeleteView(View):
+
+    def get(self, request, *args, **kwargs):
+        Registration.objects.get(user=request.user).delete()
+        return redirect('home')
+
 class RegistrationUpdateView(DetailView):
     model = Registration
     status = 1
@@ -35,7 +41,7 @@ class RegistrationUpdateView(DetailView):
         registration = self.get_object()
         registration.status = self.status
         registration.save()
-        return redirect('home')
+        return redirect('registrations-list', registration.status.id)
 
 class RegistrationPresentView(RegistrationUpdateView):
     status = 2
@@ -63,3 +69,20 @@ def change_password(request):
     return render(request, 'registration/change_password.html', {
         'form': form
     })
+
+class RegistrationsListView(ListView):
+    model = Registration
+    template_name = "registrations-list.html"
+    pdf = False
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        context['registrations'] = Registration.objects.all().order_by('user__first_name')
+        return context
+
+    def post(self, request, *args, **kwargs):
+        user = User.objects.get(username=request.POST['cpf'])
+        registration = self.get_object()
+        registration.status = 2
+        registration.save()
+        return super().get(request, *args, **kwargs)
