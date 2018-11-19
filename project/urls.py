@@ -15,7 +15,9 @@ urlpatterns = [
     path('logout/', auth_views.LogoutView.as_view(), name="logout"),
     path('participantes/', login_required(views_events.RegistrationsListView.as_view()), name="registrations-list"),
     path('inscricao/', login_required(views_events.RegistrationView.as_view()), name="registration"),
-    path('ausente/', login_required(views_events.RegistrationPresentView.as_view()), name="registration-present"),
-    path('presente/', login_required(views_events.RegistrationAbsentView.as_view()), name="registration-absent"),
-    path('cancelar-inscricao/', login_required(views_events.EventRegistrationDeleteView.as_view()), name="event-delete-registration"),
+    path('ausente/<int:pk>', login_required(views_events.RegistrationPresentView.as_view()), name="registration-present"),
+    path('presente/<int:pk>', login_required(views_events.RegistrationAbsentView.as_view()), name="registration-absent"),
+    path('cancelar-inscricao/', login_required(views_events.EventRegistrationDeleteView.as_view()), name="delete-registration"),
+    path('pago/<int:pk>', login_required(views_events.RegistrationUnpaidView.as_view()), name="registration-paid"),
+    path('naopago/<int:pk>', login_required(views_events.RegistrationPaidView.as_view()), name="registration-unpaid"),
 ]

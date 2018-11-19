@@ -41,13 +41,15 @@ class RegistrationUpdateView(DetailView):
         registration = self.get_object()
         registration.status = self.status
         registration.save()
-        return redirect('registrations-list', registration.status.id)
+        return redirect('registrations-list')
 
 class RegistrationPresentView(RegistrationUpdateView):
     status = 2
 
 class RegistrationAbsentView(RegistrationUpdateView):
     status = 3
+
+
 
 class SignUpView (CreateView):
     template_name = 'registration/signup.html'
@@ -86,3 +88,23 @@ class RegistrationsListView(ListView):
         registration.status = 2
         registration.save()
         return super().get(request, *args, **kwargs)
+
+class RegistrationUnpaidView(DetailView):
+    model = Registration
+    paid = False
+
+    def get(self, request, *args, **kwargs):
+        registration = self.get_object()
+        registration.paid = self.paid
+        registration.save()
+        return redirect('registrations-list')
+
+class RegistrationPaidView(DetailView):
+    model = Registration
+    paid = True
+
+    def get(self, request, *args, **kwargs):
+        registration = self.get_object()
+        registration.paid = self.paid
+        registration.save()
+        return redirect('registrations-list')

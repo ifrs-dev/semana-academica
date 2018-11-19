@@ -25,15 +25,14 @@
               Participe da III Semana Acadêmica
             </div>
             <center>
-              {% if registration.user.registrations %}
-                <a class="btn btn-success" href="{% url 'event-delete-registration' group.id %}" >Inscrito (Clique aqui para CANCELAR)</a>
+              {% if request.user.registrations %}
+                <a class="btn btn-success" href="{% url 'delete-registration' %}" >Inscrito (Clique aqui para CANCELAR)</a>
               {% elif not request.user.is_authenticated %}
                 <button class="btn btn-danger" disabled>Necessário Login Para Inscrição</button>
               {% else %}
                 <div align="center"><a href="{% url 'registration' %}" class="btn btn-success btn-info">Realizar Inscrição</a></div>
               {% endif %}
           </center>
-
           </div>
         </div>
       </div>

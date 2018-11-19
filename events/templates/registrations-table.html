@@ -3,9 +3,11 @@
     <tr>
       <th>Nome</th>
       <th>Cpf</th>
-      <th width="350px">E-mail</th>
+      <th width="250px">E-mail</th>
       <th>Status</th>
-      <th>Presença</th>
+      <th>Mudar Status</th>
+      <th>Status do Pagamento</th>
+      <th>Mudar Status do Pagamento</th>
       
     </tr>
   </thead>
@@ -16,17 +18,40 @@
       <td>{{ object.user.username }}</td>
       <td>{{ object.user.email }}</td>
       <td>{{ object.get_status_display }}</td>
+
       <td>
 
-        {% if object.status == 3 %}
-        <a href="{% url 'registration-present' object.pk %}" class="btn btn-success Presenca">Presente
-       </a>
-       {% endif %}
-       {% if object.status == 2 %}
-       <a href="{% url 'registration-absent' object.pk %}" class="btn btn-danger Presenca">Ausente
+        {% if object.status != 2 %}
+        <a href="{% url 'registration-present' object.pk %}" class="btn btn-success">Marcar como presente
+        </a>
+        {% endif %}
+
+        {% if object.status == 2 %}
+        <a href="{% url 'registration-absent' object.pk %}" class="btn btn-danger">Marcar como ausente
+        </a>
+        {% endif %}
+
+      </td>
+
+
+      <td>{% if object.paid  == True %} 
+      Não Pago
+      {% endif %}
+      {% if object.paid  == False %}
+      Pago
+      {% endif %}
+      </td>
+
+      <td>
+       {% if object.paid != False %}
+       <a href="{% url 'registration-paid' object.pk %}" class="btn btn-success">Marcar como pago
        </a>
        {% endif %}
 
+       {% if object.paid == False %}
+       <a href="{% url 'registration-unpaid' object.pk %}" class="btn btn-danger">Marcar como não pago
+       </a>
+       {% endif %}
      </td>
 
    </tr>
