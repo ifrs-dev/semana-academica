@@ -5,8 +5,8 @@
     <section>
       <div class="container">
         <article class="lead" align="justify">
-          <p>A <strong>3ª Semana Acadêmica do curso Bacharelado em Ciência da Computação</strong> acontecerá nos dias 27, 28 e 29 de novembro de 2018 no IFRS - Campus Ibirubá.
-          A nossa 3ª Semana Acadêmica contará com palestras e minicursos, oportunizando a difusão da troca de conhecimento e desta forma, aproximar alunos e professores de forma dinâmica, complementando a formação acadêmica do aluno.
+          <p>A <strong>III Semana Acadêmica do curso Bacharelado em Ciência da Computação</strong> acontecerá nos dias 27, 28 e 29 de novembro de 2018 no IFRS - Campus Ibirubá.
+          A nossa III Semana Acadêmica contará com palestras e minicursos, oportunizando a difusão da troca de conhecimento e, desta forma, aproximar alunos e professores de forma dinâmica, complementando a formação acadêmica do aluno.
           </p>
           <p><strong>Participe conosco!</strong></p>
             <b>Links Importantes: <b>
@@ -22,18 +22,17 @@
         <div class="row">
           <div class="col-md-12">
             <div class="h2" align="center">
-              Participe da 3ª Semana Acadêmica
-            </div><center>
-            {% if registration %}
-                    {% if registration.user == user %}
-                      <a class="btn btn-success" href="{% url 'event-delete-registration' group.id %}" >Inscrito (Clique aqui para CANCELAR)</a>
-                    {% endif %}
-                  {% elif not request.user.is_authenticated %}
-                    <button class="btn btn-danger" disabled>Necessário Login Para Inscrição</button>
-                  {% else %}
-                    <div align="center"><a href="{% url 'registration' %}" class="btn btn-success btn-info">Realizar Inscrição</a></div>
-{% endif %}
-</center>
+              Participe da III Semana Acadêmica
+            </div>
+            <center>
+              {% if registration.user.registrations %}
+                <a class="btn btn-success" href="{% url 'event-delete-registration' group.id %}" >Inscrito (Clique aqui para CANCELAR)</a>
+              {% elif not request.user.is_authenticated %}
+                <button class="btn btn-danger" disabled>Necessário Login Para Inscrição</button>
+              {% else %}
+                <div align="center"><a href="{% url 'registration' %}" class="btn btn-success btn-info">Realizar Inscrição</a></div>
+              {% endif %}
+          </center>
 
           </div>
         </div>
@@ -60,22 +59,27 @@
 
                 <tr>
                   <td>Palestra: "Controlando um sistema embarcado usando Telegram e Google Scripts"</td>
-                  <td>Prof Anderson Prante Professor Substituto de Informática Instituto Federal Farroupilha - Campus Panambi</td>
+                  <td>Prof. Anderson Prante
+                    <br>Professor Substituto de Informática Instituto Federal Farroupilha
+                    <br>Campus Panambi</td>
                   <td>27/11/2018 <br> (terça-feira)</td>
                   <td>19h - 20h40min <br> 21h - 22h30min</td>
                 </tr>
 
                 <tr>
                   <td>Minicurso: “Uma visão geral sobre as Progressive Web Apps (PWAs)”</td>
-                  <td>Profª. Draª. Anubis Graciela de Moraes Rossetto Informática - Campus Passo Fundo Instituto Federal de Educação, Ciência e Tecnologia Sul-riograndense (IFSUL)</td>
+                  <td>Profª. Draª. Anubis Graciela de Moraes Rossetto
+                    <br>Professora de Informática Instituto Federal de Educação, Ciência e Tecnologia Sul-riograndense (IFSUL)
+                    <br>Campus Passo Fundo</td>
                   <td>28/11/2018 <br> (quarta-feira)</td>
                   <td>19h - 20h40min <br> 21h - 22h30min</td>
                 </tr>
 
                 <tr>
                   <td>Palestra: "Uma Introdução ao Aprendizado de Máquina e às Redes Neurais Profundas"</td>
-                  <td>Prof. Me. Carlos Alexandre Silva dos Santos Informática - Campus Passo Fundo Instituto Federal de Educação, Ciência e Tecnologia Sul-riograndense (IFSUL)
-</td>
+                  <td>Prof. Me. Carlos Alexandre Silva dos Santos
+                    <br>Professor de Informática Instituto Federal de Educação, Ciência e Tecnologia Sul-riograndense (IFSUL)
+                    <br>Campus Passo Fundo</td>
                   <td>29/11/2018 <br> (quinta-feira)</td>
                   <td>19h - 20h40min <br> 21h - 22h30min</td>
                 </tr>

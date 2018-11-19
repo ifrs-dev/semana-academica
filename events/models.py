@@ -17,3 +17,4 @@ class Registration(models.Model):
 
     user = models.OneToOneField(User, on_delete=models.PROTECT, related_name='registrations')
     status = models.IntegerField(choices=CHOICES_STATUS_REGISTRATION, default=1)
+    paid = models.BooleanField(default=False)
